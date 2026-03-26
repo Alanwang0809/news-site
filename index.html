@@ -287,7 +287,8 @@
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-                return await response.json();
+                const data = await response.json();
+                return data;
             } catch (error) {
                 console.error('加载新闻数据失败:', error);
                 throw error;
@@ -304,6 +305,8 @@
                 '商业航天': []
             };
             
+            if (!newsArray) return categories;
+            
             newsArray.forEach(news => {
                 const category = news.category;
                 if (categories[category]) {
@@ -318,30 +321,32 @@
 
         // 创建新闻卡片
         function createNewsCard(news) {
+            if (!news) return '';
+            
             return `
                 <div class="news-card">
                     <h3 class="news-title">
-                        <a href="${news.url}" target="_blank" rel="noopener noreferrer">
-                            ${news.title}
+                        <a href="${news.url || '#'}" target="_blank" rel="noopener noreferrer">
+                            ${news.title || '无标题'}
                         </a>
                     </h3>
                     
                     <div class="news-meta">
-                        <span class="news-time">${news.time}</span>
-                        <span class="news-source">${news.source}</span>
-                        <span class="category-tag">${news.category}</span>
+                        <span class="news-time">${news.time || '未知时间'}</span>
+                        <span class="news-source">${news.source || '未知来源'}</span>
+                        <span class="category-tag">${news.category || '未分类'}</span>
                     </div>
                     
                     <div class="news-summary">
-                        ${news.summary}
+                        ${news.summary || '无摘要'}
                     </div>
                     
                     <div class="news-focus">
                         <strong>📌 关注点</strong>
-                        ${news.focus}
+                        ${news.focus || '无关注点说明'}
                     </div>
                     
-                    <a href="${news.url}" class="news-link" target="_blank" rel="noopener noreferrer">
+                    <a href="${news.url || '#'}" class="news-link" target="_blank" rel="noopener noreferrer">
                         阅读原文
                     </a>
                 </div>
@@ -350,7 +355,7 @@
 
         // 创建分类区块
         function createCategorySection(categoryName, newsArray) {
-            if (newsArray.length === 0) return '';
+            if (!newsArray || newsArray.length === 0) return '';
             
             const categoryClass = {
                 '宏观': 'category-macro',
@@ -358,13 +363,13 @@
                 '科技': 'category-tech',
                 '新能源': 'category-energy',
                 '商业航天': 'category-space'
-            }[categoryName] || '';
+            }[categoryName] || 'category-macro';
             
             const newsCards = newsArray.map(news => createNewsCard(news)).join('');
             
             return `
                 <div class="category-section ${categoryClass}">
-                    <h2 class="category-title">${categoryName}</h2>
+                    <h2 class="category-title">${categoryName} <span style="font-size: 1rem; color: #7f8c8d;">(${newsArray.length}条)</span></h2>
                     <div class="news-grid">
                         ${newsCards}
                     </div>
@@ -374,7 +379,7 @@
 
         // 创建统计信息
         function createStats(data) {
-            if (!data.news || !Array.isArray(data.news)) return '';
+            if (!data || !data.news || !Array.isArray(data.news)) return '';
             
             const totalNews = data.news.length;
             const categories = {};
@@ -384,6 +389,13 @@
                 categories[category] = (categories[category] || 0) + 1;
             });
             
+            const categoryItems = Object.entries(categories).map(([category, count]) => `
+                <div class="stat-item">
+                    <div class="stat-value">${count}</div>
+                    <div class="stat-label">${category}</div>
+                </div>
+            `).join('');
+            
             return `
                 <div class="stats">
                     <h3>📊 今日新闻统计</h3>
@@ -392,12 +404,7 @@
                             <div class="stat-value">${totalNews}</div>
                             <div class="stat-label">总新闻数</div>
                         </div>
-                        ${Object.entries(categories).map(([category, count]) => `
-                            <div class="stat-item">
-                                <div class="stat-value">${count}</div>
-                                <div class="stat-label">${category}</div>
-                            </div>
-                        `).join('')}
+                        ${categoryItems}
                     </div>
                 </div>
             `;
@@ -419,7 +426,7 @@
                 statsContainer.innerHTML = createStats(newsData);
                 
                 // 按分类分组
-                const groupedNews = groupNewsByCategory(newsData.news || []);
+                const groupedNews = groupNewsByCategory(newsData.news);
                 
                 // 渲染所有分类
                 let html = '';
@@ -446,6 +453,7 @@
                 container.innerHTML = html;
                 
             } catch (error) {
+                console.error('渲染错误详情:', error);
                 container.innerHTML = `
                     <div class="error">
                         <h3>❌ 加载新闻数据失败</h3>
@@ -454,12 +462,16 @@
                         <p>检查控制台获取更多信息。</p>
                     </div>
                 `;
-                console.error('渲染错误:', error);
             }
         }
 
         // 页面加载完成后渲染
         document.addEventListener('DOMContentLoaded', renderPage);
+        
+        // 添加错误处理
+        window.addEventListener('error', function(event) {
+            console.error('页面JavaScript错误:', event.error);
+        });
     </script>
 </body>
 </html>

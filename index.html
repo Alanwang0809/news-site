@@ -44,6 +44,12 @@
             font-weight: 300;
         }
         
+        .update-info {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+        
         .category-section {
             margin-bottom: 50px;
         }
@@ -104,13 +110,12 @@
         .news-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #2c3e50;
             margin-bottom: 15px;
             line-height: 1.4;
         }
         
         .news-title a {
-            color: inherit;
+            color: #2c3e50;
             text-decoration: none;
             transition: color 0.2s;
         }
@@ -123,76 +128,54 @@
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 0.9rem;
-            color: #6c757d;
+            color: #7f8c8d;
         }
         
         .news-time, .news-source {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 5px;
         }
         
-        .news-time::before {
-            content: '🕒';
-            font-size: 0.9em;
-        }
-        
-        .news-source::before {
-            content: '📰';
-            font-size: 0.9em;
-        }
-        
         .category-tag {
-            display: inline-block;
-            padding: 4px 12px;
+            background: #ecf0f1;
+            padding: 3px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: 500;
         }
         
-        .category-macro .category-tag { background: #e3f2fd; color: #1565c0; }
-        .category-ai .category-tag { background: #f3e5f5; color: #7b1fa2; }
-        .category-tech .category-tag { background: #e8f5e9; color: #2e7d32; }
-        .category-energy .category-tag { background: #fff3e0; color: #ef6c00; }
-        .category-space .category-tag { background: #ffebee; color: #c62828; }
-        
         .news-summary {
-            color: #495057;
             margin-bottom: 20px;
             line-height: 1.7;
-            font-size: 0.95rem;
+            color: #34495e;
         }
         
         .news-focus {
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
-            border-left: 4px solid #3498db;
             margin-bottom: 20px;
-            font-size: 0.95rem;
+            border-left: 4px solid #3498db;
         }
         
         .news-focus strong {
-            color: #2c3e50;
             display: block;
             margin-bottom: 5px;
+            color: #2c3e50;
         }
         
         .news-link {
             display: inline-block;
-            padding: 10px 20px;
             background: #3498db;
             color: white;
-            text-decoration: none;
+            padding: 10px 20px;
             border-radius: 6px;
+            text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
             transition: all 0.3s ease;
-            text-align: center;
         }
         
         .news-link:hover {
@@ -201,53 +184,65 @@
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
         }
         
-        .news-link::after {
-            content: ' ↗';
-            font-size: 0.9em;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-            color: #6c757d;
-        }
-        
         .error {
-            text-align: center;
-            padding: 40px;
-            color: #e74c3c;
-            background: #ffebee;
+            background: #ffeaea;
+            border: 1px solid #ff6b6b;
             border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .footer {
+            padding: 30px;
             text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            color: #6c757d;
-            font-size: 0.9rem;
-            border-top: 1px solid #e9ecef;
+            margin: 40px 0;
         }
         
-        /* 响应式设计 */
+        .error h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        
+        .stats {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
         @media (max-width: 768px) {
-            body {
-                padding: 15px;
+            .news-grid {
+                grid-template-columns: 1fr;
             }
             
             .header h1 {
                 font-size: 2rem;
-            }
-            
-            .news-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .news-card {
-                padding: 20px;
             }
             
             .category-title {
@@ -255,18 +250,13 @@
             }
         }
         
-        @media (max-width: 480px) {
-            .header {
-                padding: 20px 15px;
-            }
-            
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .date {
-                font-size: 1rem;
-            }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #7f8c8d;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -274,27 +264,30 @@
     <div class="header">
         <h1>📰 每日新闻简报</h1>
         <div class="date" id="current-date">加载中...</div>
+        <div class="update-info">
+            最后更新: <span id="update-time">-</span>
+        </div>
     </div>
-
+    
+    <div id="stats-container"></div>
+    
     <div id="news-container">
-        <div class="loading">正在加载新闻数据...</div>
+        <p style="text-align: center; padding: 40px;">正在加载新闻数据...</p>
     </div>
-
+    
     <div class="footer">
-        <p>数据来源：权威新闻媒体 | 更新时间：<span id="update-time">-</span></p>
-        <p>© 2026 每日新闻简报 | 双击 index.html 即可查看</p>
+        <p>新闻简报系统 | 基于真实新闻数据生成 | 每日自动更新</p>
     </div>
 
     <script>
-        // 从 news.json 加载数据
+        // 加载新闻数据
         async function loadNewsData() {
             try {
                 const response = await fetch('news.json');
                 if (!response.ok) {
-                    throw new Error(`HTTP错误: ${response.status}`);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-                const data = await response.json();
-                return data;
+                return await response.json();
             } catch (error) {
                 console.error('加载新闻数据失败:', error);
                 throw error;
@@ -315,6 +308,8 @@
                 const category = news.category;
                 if (categories[category]) {
                     categories[category].push(news);
+                } else {
+                    categories['宏观'].push(news);
                 }
             });
             
@@ -377,27 +372,76 @@
             `;
         }
 
+        // 创建统计信息
+        function createStats(data) {
+            if (!data.news || !Array.isArray(data.news)) return '';
+            
+            const totalNews = data.news.length;
+            const categories = {};
+            
+            data.news.forEach(news => {
+                const category = news.category || '未分类';
+                categories[category] = (categories[category] || 0) + 1;
+            });
+            
+            return `
+                <div class="stats">
+                    <h3>📊 今日新闻统计</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">${totalNews}</div>
+                            <div class="stat-label">总新闻数</div>
+                        </div>
+                        ${Object.entries(categories).map(([category, count]) => `
+                            <div class="stat-item">
+                                <div class="stat-value">${count}</div>
+                                <div class="stat-label">${category}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
         // 渲染页面
         async function renderPage() {
             const container = document.getElementById('news-container');
+            const statsContainer = document.getElementById('stats-container');
             
             try {
                 const newsData = await loadNewsData();
                 
                 // 更新日期
-                document.getElementById('current-date').textContent = newsData.date;
+                document.getElementById('current-date').textContent = newsData.date || '未知日期';
                 document.getElementById('update-time').textContent = new Date().toLocaleString('zh-CN');
                 
+                // 显示统计信息
+                statsContainer.innerHTML = createStats(newsData);
+                
                 // 按分类分组
-                const groupedNews = groupNewsByCategory(newsData.news);
+                const groupedNews = groupNewsByCategory(newsData.news || []);
                 
                 // 渲染所有分类
                 let html = '';
                 const categoryOrder = ['宏观', 'AI', '科技', '新能源', '商业航天'];
                 
                 categoryOrder.forEach(category => {
-                    html += createCategorySection(category, groupedNews[category] || []);
+                    const newsList = groupedNews[category] || [];
+                    if (newsList.length > 0) {
+                        html += createCategorySection(category, newsList);
+                    }
                 });
+                
+                // 如果没有新闻
+                if (html === '') {
+                    html = `
+                        <div class="error">
+                            <h3>⚠️ 暂无新闻数据</h3>
+                            <p>news.json文件中没有找到新闻数据。</p>
+                            <p>请检查news.json文件格式。</p>
+                        </div>
+                    `;
+                }
                 
                 container.innerHTML = html;
                 
@@ -410,16 +454,12 @@
                         <p>检查控制台获取更多信息。</p>
                     </div>
                 `;
+                console.error('渲染错误:', error);
             }
         }
 
         // 页面加载完成后渲染
         document.addEventListener('DOMContentLoaded', renderPage);
-        
-        // 添加简单的错误处理
-        window.addEventListener('error', function(event) {
-            console.error('页面错误:', event.error);
-        });
     </script>
 </body>
 </html>
